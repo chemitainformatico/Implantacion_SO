@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHRONOVA - Relojes Premium</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#07111f;
+    color:#fff;
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    height:75px;
+    background:#050c16;
+    border-bottom:1px solid #c9a227;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#d4af37;
+    letter-spacing:3px;
+}
+
+.nav-buttons{
+    display:flex;
+    gap:15px;
+}
+
+.nav-btn{
+    border:1px solid #d4af37;
+    background:transparent;
+    color:white;
+    padding:10px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.nav-btn:hover{
+    background:#d4af37;
+    color:#050c16;
+}
+
+#cartCount{
+    background:#d4af37;
+    color:#000;
+    border-radius:50%;
+    padding:3px 7px;
+    font-size:12px;
+    margin-left:5px;
+}
+
+.hero{
+    min-height:550px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 20px;
+    background:
+        linear-gradient(
+            rgba(3,10,18,.75),
+            rgba(3,10,18,.9)
+        ),
+        url("https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1800&q=80")
+        center/cover;
+}
+
+.hero-content{
+    max-width:800px;
+}
+
+.hero h1{
+    font-size:65px;
+    color:#d4af37;
+    letter-spacing:6px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:20px;
+    color:#ddd;
+    margin-bottom:30px;
+}
+
+.hero-btn{
+    background:#d4af37;
+    border:none;
+    padding:15px 35px;
+    font-size:17px;
+    font-weight:bold;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.catalog{
+    padding:70px 7%;
+}
+
+.section-title{
+    text-align:center;
+    color:#d4af37;
+    font-size:35px;
+    margin-bottom:35px;
+}
+
+.filters{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:40px;
+    flex-wrap:wrap;
+}
+
+.filter-btn{
+    padding:10px 25px;
+    border:1px solid #d4af37;
+    background:transparent;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover{
+    background:#d4af37;
+    color:#000;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
+    gap:25px;
+}
+
+.product-card{
+    background:#0d1b2a;
+    border:1px solid #26384c;
+    border-radius:10px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.product-card:hover{
+    transform:translateY(-5px);
+    border-color:#d4af37;
+}
+
+.product-card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.product-info{
+    padding:20px;
+}
+
+.brand{
+    color:#d4af37;
+    font-size:14px;
+}
+
+.product-info h3{
+    margin:8px 0;
+}
+
+.price{
+    color:#d4af37;
+    font-size:20px;
+    font-weight:bold;
+    margin:12px 0;
+}
+
+.product-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.product-buttons button{
+    flex:1;
+    padding:10px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.details-btn{
+    background:transparent;
+    border:1px solid #777;
+    color:white;
+}
+
+.add-btn{
+    background:#d4af37;
+    border:1px solid #d4af37;
+    color:#000;
+    font-weight:bold;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:2000;
+    padding:20px;
+}
+
+.overlay.active{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:650px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#0b1827;
+    border:1px solid #d4af37;
+    border-radius:12px;
+    padding:30px;
+    position:relative;
+}
+
+.modal-large{
+    max-width:850px;
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:15px;
+    background:none;
+    border:none;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.modal h2{
+    color:#d4af37;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    color:#ddd;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:13px;
+    border-radius:6px;
+    border:1px solid #415266;
+    background:#07111f;
+    color:white;
+    outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#d4af37;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.primary-btn{
+    width:100%;
+    padding:14px;
+    background:#d4af37;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.secondary-btn{
+    width:100%;
+    padding:13px;
+    background:transparent;
+    color:white;
+    border:1px solid #777;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.error-message{
+    display:none;
+    background:#471b1b;
+    border:1px solid #c94a4a;
+    color:#ffb3b3;
+    padding:12px;
+    border-radius:6px;
+    margin-bottom:15px;
+}
+
+.error-message.show{
+    display:block;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #26384c;
+}
+
+.cart-item-info{
+    flex:1;
+}
+
+.remove-btn{
+    background:#8e2424;
+    color:white;
+    border:none;
+    padding:7px 10px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.cart-total{
+    text-align:right;
+    font-size:22px;
+    color:#d4af37;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.checkout-steps{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:30px;
+    gap:5px;
+}
+
+.step{
+    flex:1;
+    text-align:center;
+    padding:10px 5px;
+    border-bottom:3px solid #34485d;
+    color:#777;
+    font-size:13px;
+}
+
+.step.active{
+    color:#d4af37;
+    border-color:#d4af37;
+}
+
+.checkout-section{
+    display:none;
+}
+
+.checkout-section.active{
+    display:block;
+}
+
+.checkout-section h3{
+    margin-bottom:20px;
+    color:#d4af37;
+}
+
+.selection-card{
+    display:block;
+    border:1px solid #34485d;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.selection-card:hover{
+    border-color:#d4af37;
+}
+
+.selection-card input{
+    margin-right:10px;
+}
+
+.selection-card strong{
+    color:#d4af37;
+}
+
+.payment-options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.payment-extra{
+    display:none;
+    background:#101f30;
+    border:1px solid #26384c;
+    border-radius:8px;
+    padding:20px;
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.payment-extra.active{
+    display:block;
+}
+
+.delivery-extra{
+    display:none;
+    background:#101f30;
+    border:1px solid #26384c;
+    border-radius:8px;
+    padding:20px;
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.delivery-extra.active{
+    display:block;
+}
+
+.summary{
+    background:#101f30;
+    padding:20px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:10px 0;
+    border-bottom:1px solid #26384c;
+}
+
+.summary-row:last-child{
+    border-bottom:none;
+}
+
+.summary-row span:last-child{
+    color:#d4af37;
+    text-align:right;
+}
+
+.success{
+    text-align:center;
+    padding:30px 10px;
+}
+
+.success-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#d4af37;
+    color:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+    margin:0 auto 20px;
+}
+
+.success h2{
+    color:#d4af37;
+}
+
+.order-number{
+    font-size:24px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+footer{
+    text-align:center;
+    padding:40px;
+    background:#050c16;
+    border-top:1px solid #26384c;
+    color:#888;
+}
+
+@media(max-width:600px){
+    nav{
+        padding:0 4%;
+    }
+
+    .logo{
+        font-size:21px;
+    }
+
+    .nav-btn{
+        padding:8px 10px;
+        font-size:12px;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .modal{
+        padding:22px;
+    }
+
+    .checkout-steps{
+        overflow-x:auto;
+    }
+
+    .step{
+        min-width:80px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">CHRONOVA</div>
+
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="openLogin()" id="loginButton">
+            Iniciar sesión
+        </button>
+
+        <button class="nav-btn" onclick="openCart()">
+            Carrito <span id="cartCount">0</span>
+        </button>
+    </div>
+</nav>
+
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>CHRONOVA</h1>
+
+        <p>
+            Relojes premium para quienes valoran el tiempo,
+            el diseño y la elegancia.
+        </p>
+
+        <button class="hero-btn" onclick="scrollToCatalog()">
+            Ver colección
+        </button>
+    </div>
+</section>
+
+
+<section class="catalog" id="catalog">
+
+    <h2 class="section-title">
+        Nuestra colección
+    </h2>
+
+    <div class="filters">
+
+        <button
+            class="filter-btn active"
+            onclick="filterProducts('Todos',this)">
+            Todos
+        </button>
+
+        <button
+            class="filter-btn"
+            onclick="filterProducts('Clásicos',this)">
+            Clásicos
+        </button>
+
+        <button
+            class="filter-btn"
+            onclick="filterProducts('Sport',this)">
+            Sport
+        </button>
+
+    </div>
+
+    <div class="products" id="products"></div>
+
+</section>
+
+
+<!-- MODAL PRODUCTO -->
+
+<div class="overlay" id="productModal">
+
+    <div class="modal">
+
+        <button class="close" onclick="closeModal('productModal')">
+            ×
+        </button>
+
+        <div id="productDetails"></div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL LOGIN -->
+
+<div class="overlay" id="loginModal">
+
+    <div class="modal">
+
+        <button class="close" onclick="closeModal('loginModal')">
+            ×
+        </button>
+
+        <h2>Iniciar sesión</h2>
+
+        <div
+            class="error-message"
+            id="loginError">
+        </div>
+
+        <div class="form-group">
+
+            <label>Correo electrónico</label>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="correo@ejemplo.com">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Contraseña</label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Contraseña">
+
+        </div>
+
+        <button
+            class="primary-btn"
+            onclick="login()">
+            Iniciar sesión
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL CARRITO -->
+
+<div class="overlay" id="cartModal">
+
+    <div class="modal">
+
+        <button class="close" onclick="closeModal('cartModal')">
+            ×
+        </button>
+
+        <h2>Tu carrito</h2>
+
+        <div id="cartItems"></div>
+
+        <div
+            class="cart-total"
+            id="cartTotal">
+            Total: 0 €
+        </div>
+
+        <button
+            class="primary-btn"
+            onclick="startCheckout()">
+            Continuar con la compra
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- CHECKOUT -->
+
+<div class="overlay" id="checkoutModal">
+
+    <div class="modal modal-large">
+
+        <button class="close" onclick="closeModal('checkoutModal')">
+            ×
+        </button>
+
+        <h2>Finalizar compra</h2>
+
+
+        <div class="checkout-steps">
+
+            <div class="step active" id="indicator1">
+                1. Producto
+            </div>
+
+            <div class="step" id="indicator2">
+                2. Pago
+            </div>
+
+            <div class="step" id="indicator3">
+                3. Entrega
+            </div>
+
+            <div class="step" id="indicator4">
+                4. Resumen
+            </div>
+
+            <div class="step" id="indicator5">
+                5. Confirmación
+            </div>
+
+        </div>
+
+
+        <!-- PASO 1 -->
+
+        <div
+            class="checkout-section active"
+            id="checkoutStep1">
+
+            <h3>Selecciona el producto</h3>
+
+            <div id="checkoutProducts"></div>
+
+            <div
+                class="error-message"
+                id="checkoutError1">
+            </div>
+
+            <button
+                class="primary-btn"
+                onclick="goToPayment()">
+                Continuar
+            </button>
+
+        </div>
+
+
+        <!-- PASO 2 -->
+
+        <div
+            class="checkout-section"
+            id="checkoutStep2">
+
+            <h3>Método de pago</h3>
+
+            <div class="payment-options">
+
+                <label class="selection-card">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="card"
+                        onchange="showPaymentForm('card')">
+
+                    <strong>Visa / Tarjeta</strong>
+
+                    <br>
+
+                    Pago mediante tarjeta bancaria.
+
+                </label>
+
+
+                <div
+                    class="payment-extra"
+                    id="cardPayment">
+
+                    <div class="form-group">
+
+                        <label>
+                            Número de tarjeta
+                        </label>
+
+                        <input
+                            type="text"
+                            id="cardNumber"
+                            placeholder="Número de tarjeta">
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Fecha de caducidad
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cardExpiry"
+                                placeholder="MM/AA">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                CVV
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cardCVV"
+                                placeholder="CVV">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <label class="selection-card">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="paypal"
+                        onchange="showPaymentForm('paypal')">
+
+                    <strong>PayPal</strong>
+
+                    <br>
+
+                    Pago seguro mediante PayPal.
+
+                </label>
+
+
+                <div
+                    class="payment-extra"
+                    id="paypalPayment">
+
+                    <div class="form-group">
+
+                        <label>
+                            Correo de PayPal
+                        </label>
+
+                        <input
+                            type="text"
+                            id="paypalEmail"
+                            placeholder="Correo de PayPal">
+
+                    </div>
+
+                </div>
+
+
+                <label class="selection-card">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="cash"
+                        onchange="showPaymentForm('cash')">
+
+                    <strong>Pagar al recoger</strong>
+
+                    <br>
+
+                    Realiza el pago cuando recojas tu pedido.
+
+                </label>
+
+
+                <div
+                    class="payment-extra"
+                    id="cashPayment">
+
+                    <p>
+                        Podrás realizar el pago directamente
+                        en el punto de recogida seleccionado.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                onclick="goToPickup()">
+                Continuar
+            </button>
+
+        </div>
+
+
+        <!-- PASO 3 -->
+
+        <div
+            class="checkout-section"
+            id="checkoutStep3">
+
+            <h3>Método de entrega</h3>
+
+
+            <label class="selection-card">
+
+                <input
+                    type="radio"
+                    name="delivery"
+                    value="pickup"
+                    onchange="showDeliveryForm('pickup')">
+
+                <strong>Recogida en tienda</strong>
+
+                <br>
+
+                Recoge tu pedido en uno de nuestros puntos.
+
+            </label>
+
+
+            <div
+                class="delivery-extra"
+                id="pickupDelivery">
+
+                <div class="form-group">
+
+                    <label>
+                        Punto de recogida
+                    </label>
+
+                    <select id="pickupPoint">
+
+                        <option value="">
+                            Selecciona un punto
+                        </option>
+
+                        <option value="Madrid Centro">
+                            Madrid Centro
+                        </option>
+
+                        <option value="Madrid Norte">
+                            Madrid Norte
+                        </option>
+
+                        <option value="Madrid Sur">
+                            Madrid Sur
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <label class="selection-card">
+
+                <input
+                    type="radio"
+                    name="delivery"
+                    value="home"
+                    onchange="showDeliveryForm('home')">
+
+                <strong>Envío a domicilio</strong>
+
+                <br>
+
+                Recibe tu pedido directamente en tu domicilio.
+
+            </label>
+
+
+            <div
+                class="delivery-extra"
+                id="homeDelivery">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Nombre
+                        </label>
+
+                        <input
+                            type="text"
+                            id="deliveryName">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Apellidos
+                        </label>
+
+                        <input
+                            type="text"
+                            id="deliverySurname">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Dirección
+                    </label>
+
+                    <input
+                        type="text"
+                        id="deliveryAddress">
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Ciudad
+                        </label>
+
+                        <input
+                            type="text"
+                            id="deliveryCity">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Código postal
+                        </label>
+
+                        <input
+                            type="text"
+                            id="deliveryPostal">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Teléfono
+                    </label>
+
+                    <input
+                        type="text"
+                        id="deliveryPhone">
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                onclick="reviewOrder()">
+                Revisar pedido
+            </button>
+
+        </div>
+
+
+        <!-- PASO 4 -->
+
+        <div
+            class="checkout-section"
+            id="checkoutStep4">
+
+            <h3>Resumen del pedido</h3>
+
+            <div
+                class="summary"
+                id="orderSummary">
+            </div>
+
+            <button
+                class="primary-btn"
+                onclick="finishOrder()">
+                Confirmar pedido
+            </button>
+
+        </div>
+
+
+        <!-- PASO 5 -->
+
+        <div
+            class="checkout-section"
+            id="checkoutStep5">
+
+            <div class="success">
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+                <h2>
+                    ¡Pedido realizado!
+                </h2>
+
+                <p>
+                    Tu pedido se ha realizado correctamente.
+                </p>
+
+                <div
+                    class="order-number"
+                    id="orderNumber">
+                </div>
+
+                <p>
+                    Gracias por confiar en CHRONOVA.
+                </p>
+
+                <button
+                    class="primary-btn"
+                    onclick="closeModal('checkoutModal')">
+                    Volver a la tienda
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    © 2026 CHRONOVA - Relojes Premium
+</footer>
+
+
+<script>
+
+const products = [
+
+    {
+        id:1,
+        brand:"OMEGA",
+        name:"Seamaster",
+        category:"Sport",
+        price:5200,
+        image:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=800&q=80",
+        description:"Reloj deportivo premium con diseño elegante y resistente."
+    },
+
+    {
+        id:2,
+        brand:"SEIKO",
+        name:"Presage",
+        category:"Clásicos",
+        price:850,
+        image:"https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80",
+        description:"Diseño clásico japonés con acabados de alta calidad."
+    },
+
+    {
+        id:3,
+        brand:"CASIO",
+        name:"Edifice",
+        category:"Sport",
+        price:180,
+        image:"https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=800&q=80",
+        description:"Reloj deportivo Casio con diseño moderno y resistente."
+    },
+
+    {
+        id:4,
+        brand:"ARMANI",
+        name:"Exchange",
+        category:"Clásicos",
+        price:320,
+        image:"https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=800&q=80",
+        description:"Elegancia italiana con un diseño moderno."
+    },
+
+    {
+        id:5,
+        brand:"TIMEX",
+        name:"Marlin",
+        category:"Clásicos",
+        price:420,
+        image:"https://images.unsplash.com/photo-1539874754764-5a96559165b0?auto=format&fit=crop&w=800&q=80",
+        description:"Inspirado en la relojería clásica."
+    },
+
+    {
+        id:6,
+        brand:"TISSOT",
+        name:"PRX",
+        category:"Clásicos",
+        price:695,
+        image:"https://images.unsplash.com/photo-1594534475808-b18fc33b045e?auto=format&fit=crop&w=800&q=80",
+        description:"Diseño deportivo elegante con brazalete integrado."
+    },
+
+    {
+        id:7,
+        brand:"CITIZEN",
+        name:"Eco-Drive",
+        category:"Sport",
+        price:390,
+        image:"https://images.unsplash.com/photo-1526045431048-f857369baa09?auto=format&fit=crop&w=800&q=80",
+        description:"Tecnología Eco-Drive con diseño deportivo."
+    },
+
+    {
+        id:8,
+        brand:"HUGO BOSS",
+        name:"Chronograph",
+        category:"Clásicos",
+        price:450,
+
+        /* NUEVA IMAGEN DEL CHRONOGRAPH */
+        image:"https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80", 
+ 
+        description:"Cronógrafo elegante para ocasiones especiales." 
+    } 
+ 
+]; 
+ 
+ 
+let cart = []; 
+let loggedUser = null; 
+let selectedProduct = null; 
+ 
+ 
+function renderProducts(list = products){ 
+ 
+    const container = 
+        document.getElementById("products"); 
+ 
+    container.innerHTML = ""; 
+ 
+    list.forEach(product => { 
+ 
+        container.innerHTML += ` 
+ 
+            <div class="product-card"> 
+ 
+                <img 
+                    src="${product.image}" 
+                    alt="${product.brand} ${product.name}"> 
+ 
+                <div class="product-info"> 
+ 
+                    <div class="brand"> 
+                        ${product.brand} 
+                    </div> 
+ 
+                    <h3> 
+                        ${product.name} 
+                    </h3> 
+ 
+                    <p> 
+                        ${product.description} 
+                    </p> 
+ 
+                    <div class="price"> 
+                        ${product.price.toLocaleString("es-ES")} € 
+                    </div> 
+ 
+                    <div class="product-buttons"> 
+ 
+                        <button 
+                            class="details-btn" 
+                            onclick="openProduct(${product.id})"> 
+                            Ver detalles 
+                        </button> 
+ 
+                        <button 
+                            class="add-btn" 
+                            onclick="addToCart(${product.id})"> 
+                            Añadir 
+                        </button> 
+ 
+                    </div> 
+ 
+                </div> 
+ 
+            </div> 
+ 
+        `; 
+    }); 
+} 
+ 
+ 
+function filterProducts(category,button){ 
+ 
+    document 
+        .querySelectorAll(".filter-btn") 
+        .forEach(btn => 
+            btn.classList.remove("active") 
+        ); 
+ 
+    button.classList.add("active"); 
+ 
+    if(category === "Todos"){ 
+ 
+        renderProducts(products); 
+ 
+    }else{ 
+ 
+        renderProducts( 
+            products.filter( 
+                product => product.category === category 
+            ) 
+        ); 
+ 
+    } 
+} 
+ 
+ 
+function openProduct(id){ 
+ 
+    const product = 
+        products.find(p => p.id === id); 
+ 
+    if(!product) return; 
+ 
+    selectedProduct = product; 
+ 
+    document.getElementById("productDetails").innerHTML = ` 
+ 
+        <img 
+            src="${product.image}" 
+            alt="${product.brand} ${product.name}" 
+            style=" 
+                width:100%; 
+                max-height:350px; 
+                object-fit:cover; 
+                border-radius:8px; 
+                margin-bottom:20px; 
+            "> 
+ 
+        <div class="brand"> 
+            ${product.brand} 
+        </div> 
+ 
+        <h2> 
+            ${product.name} 
+        </h2> 
+ 
+        <p style="color:#ddd; margin-bottom:20px;"> 
+            ${product.description} 
+        </p> 
+ 
+        <div class="price"> 
+            ${product.price.toLocaleString("es-ES")} € 
+        </div> 
+ 
+        <button 
+            class="primary-btn" 
+            onclick="addToCart(${product.id}); closeModal('productModal')"> 
+            Añadir al carrito 
+        </button> 
+ 
+    `; 
+ 
+    document 
+        .getElementById("productModal") 
+        .classList.add("active"); 
+} 
+ 
+ 
+function addToCart(id){ 
+ 
+    const product = 
+        products.find(p => p.id === id); 
+ 
+    if(!product) return; 
+ 
+    cart.push(product); 
+ 
+    updateCart(); 
+ 
+} 
+ 
+ 
+function removeFromCart(index){ 
+ 
+    cart.splice(index,1); 
+ 
+    updateCart(); 
+ 
+} 
+ 
+ 
+function updateCart(){ 
+ 
+    document.getElementById("cartCount") 
+        .textContent = cart.length; 
+ 
+    const container = 
+        document.getElementById("cartItems"); 
+ 
+    const totalElement = 
+        document.getElementById("cartTotal"); 
+ 
+ 
+    if(cart.length === 0){ 
+ 
+        container.innerHTML = ` 
+            <p style="color:#aaa;"> 
+                Tu carrito está vacío. 
+            </p> 
+        `; 
+ 
+        totalElement.textContent = 
+            "Total: 0 €"; 
+ 
+        return; 
+    } 
+ 
+ 
+    container.innerHTML = ""; 
+ 
+    let total = 0; 
+ 
+ 
+    cart.forEach((product,index) => { 
+ 
+        total += product.price; 
+ 
+        container.innerHTML += ` 
+ 
+            <div class="cart-item"> 
+ 
+                <div class="cart-item-info"> 
+ 
+                    <strong> 
+                        ${product.brand} ${product.name} 
+                    </strong> 
+ 
+                    <br> 
+ 
+                    <span style="color:#d4af37;"> 
+                        ${product.price.toLocaleString("es-ES")} € 
+                    </span> 
+ 
+                </div> 
+ 
+                <button 
+                    class="remove-btn" 
+                    onclick="removeFromCart(${index})"> 
+                    Eliminar 
+                </button> 
+ 
+            </div> 
+ 
+        `; 
+ 
+    }); 
+ 
+ 
+    totalElement.textContent = 
+        "Total: " + 
+        total.toLocaleString("es-ES") + 
+        " €"; 
+ 
+} 
+ 
+ 
+function openCart(){ 
+ 
+    document 
+        .getElementById("cartModal") 
+        .classList.add("active"); 
+ 
+} 
+ 
+ 
+function openLogin(){ 
+ 
+    document 
+        .getElementById("loginModal") 
+        .classList.add("active"); 
+ 
+} 
+ 
+ 
+function login(){ 
+ 
+    const email = 
+        document.getElementById("loginEmail").value.trim(); 
+ 
+    const password = 
+        document.getElementById("loginPassword").value.trim(); 
+ 
+    const error = 
+        document.getElementById("loginError"); 
+ 
+ 
+    if(!email || !password){ 
+ 
+        error.textContent = 
+            "Introduce el correo y la contraseña."; 
+ 
+        error.classList.add("show"); 
+ 
+        return; 
+    } 
+ 
+ 
+    loggedUser = email; 
+ 
+    document.getElementById("loginButton") 
+        .textContent = "Sesión iniciada"; 
+ 
+    closeModal("loginModal"); 
+ 
+} 
+ 
+ 
+function startCheckout(){ 
+ 
+    if(cart.length === 0){ 
+ 
+        closeModal("cartModal"); 
+ 
+        return; 
+    } 
+ 
+ 
+    if(!loggedUser){ 
+ 
+        closeModal("cartModal"); 
+ 
+        openLogin(); 
+ 
+        return; 
+    } 
+ 
+ 
+    closeModal("cartModal"); 
+ 
+    selectedProduct = null; 
+ 
+    renderCheckoutProducts(); 
+ 
+    resetCheckout(); 
+ 
+    document 
+        .getElementById("checkoutModal") 
+        .classList.add("active"); 
+ 
+} 
+ 
+ 
+function renderCheckoutProducts(){ 
+ 
+    const container = 
+        document.getElementById("checkoutProducts"); 
+ 
+    container.innerHTML = ""; 
+ 
+ 
+    cart.forEach((product,index) => { 
+ 
+        container.innerHTML += ` 
+ 
+            <label class="selection-card"> 
+ 
+                <input 
+                    type="radio" 
+                    name="checkoutProduct" 
+                    value="${index}"> 
+ 
+                <strong> 
+                    ${product.brand} ${product.name} 
+                </strong> 
+ 
+                <br> 
+ 
+                ${product.price.toLocaleString("es-ES")} € 
+ 
+            </label> 
+ 
+        `; 
+ 
+    }); 
+ 
+} 
+ 
+ 
+function changeStep(step){ 
+ 
+    document 
+        .querySelectorAll(".checkout-section") 
+        .forEach(section => 
+            section.classList.remove("active") 
+        ); 
+ 
+ 
+    document 
+        .getElementById("checkoutStep" + step) 
+        .classList.add("active"); 
+ 
+ 
+    document 
+        .querySelectorAll(".step") 
+        .forEach(indicator => 
+            indicator.classList.remove("active") 
+        ); 
+ 
+ 
+    for(let i = 1; i <= step; i++){ 
+ 
+        document 
+            .getElementById("indicator" + i) 
+            .classList.add("active"); 
+ 
+    } 
+ 
+} 
+ 
+ 
+function goToPayment(){ 
+ 
+    const selected = 
+        document.querySelector( 
+            'input[name="checkoutProduct"]:checked' 
+        ); 
+ 
+    const error = 
+        document.getElementById("checkoutError1"); 
+ 
+ 
+    if(!selected){ 
+ 
+        error.textContent = 
+            "Selecciona un producto para continuar."; 
+ 
+        error.classList.add("show"); 
+ 
+        return; 
+    } 
+ 
+ 
+    error.classList.remove("show"); 
+ 
+    selectedProduct = 
+        cart[parseInt(selected.value)]; 
+ 
+ 
+    changeStep(2); 
+ 
+} 
+ 
+ 
+function showPaymentForm(type){ 
+ 
+    document 
+        .querySelectorAll(".payment-extra") 
+        .forEach(element => 
+            element.classList.remove("active") 
+        ); 
+ 
+ 
+    if(type === "card"){ 
+ 
+        document 
+            .getElementById("cardPayment") 
+            .classList.add("active"); 
+ 
+    } 
+ 
+ 
+    if(type === "paypal"){ 
+ 
+        document 
+            .getElementById("paypalPayment") 
+            .classList.add("active"); 
+ 
+    } 
+ 
+ 
+    if(type === "cash"){ 
+ 
+        document 
+            .getElementById("cashPayment") 
+            .classList.add("active"); 
+ 
+    } 
+ 
+} 
+ 
+ 
+function goToPickup(){ 
+ 
+    const payment = 
+        document.querySelector( 
+            'input[name="payment"]:checked' 
+        ); 
+ 
+ 
+    if(!payment){ 
+ 
+        return; 
+    } 
+ 
+ 
+    changeStep(3); 
+ 
+} 
+ 
+ 
+function showDeliveryForm(type){ 
+ 
+    document 
+        .querySelectorAll(".delivery-extra") 
+        .forEach(element => 
+            element.classList.remove("active") 
+        ); 
+ 
+ 
+    if(type === "pickup"){ 
+ 
+        document 
+            .getElementById("pickupDelivery") 
+            .classList.add("active"); 
+ 
+    } 
+ 
+ 
+    if(type === "home"){ 
+ 
+        document 
+            .getElementById("homeDelivery") 
+            .classList.add("active"); 
+ 
+    } 
+ 
+} 
+ 
+ 
+function reviewOrder(){ 
+ 
+    const delivery = 
+        document.querySelector( 
+            'input[name="delivery"]:checked' 
+        ); 
+ 
+ 
+    if(!delivery){ 
+ 
+        return; 
+    } 
+ 
+ 
+    let deliveryText = ""; 
+ 
+ 
+    if(delivery.value === "pickup"){ 
+ 
+        const point = 
+            document.getElementById("pickupPoint").value; 
+ 
+ 
+        if(!point){ 
+ 
+            return; 
+        } 
+ 
+ 
+        deliveryText = 
+            "Recogida en " + point; 
+ 
+    } 
+ 
+ 
+    if(delivery.value === "home"){ 
+ 
+        const name = 
+            document.getElementById("deliveryName").value; 
+ 
+        const surname = 
+            document.getElementById("deliverySurname").value; 
+ 
+        const address = 
+            document.getElementById("deliveryAddress").value; 
+ 
+        const city = 
+            document.getElementById("deliveryCity").value; 
+ 
+        const postal = 
+            document.getElementById("deliveryPostal").value; 
+ 
+        const phone = 
+            document.getElementById("deliveryPhone").value; 
+ 
+ 
+        deliveryText = 
+            `${name} ${surname}<br> 
+            ${address}<br> 
+            ${city}, ${postal}<br> 
+            Teléfono: ${phone}`; 
+ 
+    } 
+ 
+ 
+    const payment = 
+        document.querySelector( 
+            'input[name="payment"]:checked' 
+        ); 
+ 
+ 
+    if(!payment || !selectedProduct){ 
+ 
+        return; 
+    } 
+ 
+ 
+    document.getElementById("orderSummary").innerHTML = ` 
+ 
+        <div class="summary-row"> 
+ 
+            <span> 
+                Producto 
+            </span> 
+ 
+            <span> 
+                ${selectedProduct.brand} 
+                ${selectedProduct.name} 
+            </span> 
+ 
+        </div> 
+ 
+ 
+        <div class="summary-row"> 
+ 
+            <span> 
+                Precio 
+            </span> 
+ 
+            <span> 
+                ${selectedProduct.price.toLocaleString("es-ES")} € 
+            </span> 
+ 
+        </div> 
+ 
+ 
+        <div class="summary-row"> 
+ 
+            <span> 
+                Pago 
+            </span> 
+ 
+            <span> 
+                ${getPaymentName(payment.value)} 
+            </span> 
+ 
+        </div> 
+ 
+ 
+        <div class="summary-row"> 
+ 
+            <span> 
+                Entrega 
+            </span> 
+ 
+            <span> 
+                ${deliveryText} 
+            </span> 
+ 
+        </div> 
+ 
+ 
+        <div class="summary-row"> 
+ 
+            <strong> 
+                Total 
+            </strong> 
+ 
+            <strong> 
+                ${selectedProduct.price.toLocaleString("es-ES")} € 
+            </strong> 
+ 
+        </div> 
+ 
+    `; 
+ 
+ 
+    changeStep(4); 
+ 
+} 
+ 
+ 
+function getPaymentName(value){ 
+ 
+    if(value === "card") 
+        return "Visa / Tarjeta"; 
+ 
+    if(value === "paypal") 
+        return "PayPal"; 
+ 
+    if(value === "cash") 
+        return "Pago al recoger"; 
+ 
+    return ""; 
+ 
+} 
+ 
+ 
+function finishOrder(){ 
+ 
+    if(!selectedProduct){ 
+ 
+        return; 
+    } 
+ 
+ 
+    const orderNumber = 
+        "CH-" + 
+        Math.floor( 
+            100000 + 
+            Math.random() * 900000 
+        ); 
+ 
+ 
+    const index = 
+        cart.indexOf(selectedProduct); 
+ 
+ 
+    if(index !== -1){ 
+ 
+        cart.splice(index,1); 
+ 
+    } 
+ 
+ 
+    updateCart(); 
+ 
+ 
+    document 
+        .querySelectorAll(".checkout-section") 
+        .forEach(section => 
+            section.classList.remove("active") 
+        ); 
+ 
+ 
+    document 
+        .querySelectorAll(".step") 
+        .forEach(step => 
+            step.classList.remove("active") 
+        ); 
+ 
+ 
+    document 
+        .getElementById("indicator5") 
+        .classList.add("active"); 
+ 
+ 
+    document 
+        .getElementById("checkoutStep5") 
+        .classList.add("active"); 
+ 
+ 
+    document 
+        .getElementById("orderNumber") 
+        .textContent = 
+            "Pedido: " + orderNumber; 
+ 
+} 
+ 
+ 
+function resetCheckout(){ 
+ 
+    changeStep(1); 
+ 
+    selectedProduct = null; 
+ 
+ 
+    document 
+        .querySelectorAll( 
+            'input[name="payment"]' 
+        ) 
+        .forEach(input => 
+            input.checked = false 
+        ); 
+ 
+ 
+    document 
+        .querySelectorAll( 
+            'input[name="delivery"]' 
+        ) 
+        .forEach(input => 
+            input.checked = false 
+        ); 
+ 
+ 
+    document 
+        .querySelectorAll(".payment-extra") 
+        .forEach(element => 
+            element.classList.remove("active") 
+        ); 
+ 
+ 
+    document 
+        .querySelectorAll(".delivery-extra") 
+        .forEach(element => 
+            element.classList.remove("active") 
+        ); 
+ 
+ 
+    document 
+        .querySelectorAll(".error-message") 
+        .forEach(element => 
+            element.classList.remove("show") 
+        ); 
+ 
+} 
+ 
+ 
+function closeModal(id){ 
+ 
+    document 
+        .getElementById(id) 
+        .classList.remove("active"); 
+ 
+} 
+ 
+ 
+document 
+    .querySelectorAll(".overlay") 
+    .forEach(overlay => { 
+ 
+        overlay.addEventListener("click",function(event){ 
+ 
+            if(event.target === overlay){ 
+ 
+                overlay.classList.remove("active"); 
+ 
+            } 
+ 
+        }); 
+ 
+    }); 
+ 
+ 
+function scrollToCatalog(){ 
+ 
+    document 
+        .getElementById("catalog") 
+        .scrollIntoView({ 
+            behavior:"smooth" 
+        }); 
+ 
+} 
+ 
+ 
+document.addEventListener("keydown",function(event){ 
+ 
+    if(event.key === "Escape"){ 
+ 
+        document 
+            .querySelectorAll(".overlay") 
+            .forEach(overlay => 
+                overlay.classList.remove("active") 
+            ); 
+ 
+    } 
+ 
+}); 
+ 
+ 
+renderProducts(); 
+updateCart(); 
+ 
+</script> 
+ 
+</body> 
+</html>     
